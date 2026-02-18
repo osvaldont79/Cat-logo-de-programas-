@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Programas - Instalación Profesional Windows y Mac</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Header */
+        header {
+            padding: 3rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.5);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .contact-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px -10px rgba(37, 211, 102, 0.5);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-cta:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 20px 40px -10px rgba(37, 211, 102, 0.6);
+        }
+
+        .extra-service {
+            display: inline-block;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Search & Filter */
+        .controls {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            padding: 0 1rem;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            color: var(--light);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.6;
+        }
+
+        /* Categories Grid */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1rem 4rem;
+        }
+
+        .category {
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .category:nth-child(1) { animation-delay: 0.1s; }
+        .category:nth-child(2) { animation-delay: 0.2s; }
+        .category:nth-child(3) { animation-delay: 0.3s; }
+        .category:nth-child(4) { animation-delay: 0.4s; }
+        .category:nth-child(5) { animation-delay: 0.5s; }
+        .category:nth-child(6) { animation-delay: 0.6s; }
+        .category:nth-child(7) { animation-delay: 0.7s; }
+        .category:nth-child(8) { animation-delay: 0.8s; }
+        .category:nth-child(9) { animation-delay: 0.9s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .category:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .category-header:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .category.active .category-icon {
+            transform: scale(1.1);
+        }
+
+        .category-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            flex: 1;
+            background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .category-count {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            margin-left: 0.5rem;
+        }
+
+        .toggle-icon svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            stroke: currentColor;
+        }
+
+        .category.active .toggle-icon {
+            background: var(--primary);
+            transform: rotate(180deg);
+        }
+
+        .category.active .toggle-icon svg {
+            transform: rotate(180deg);
+        }
+
+        /* Collapsible Content */
+        .category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1), padding 0.4s ease;
+            padding: 0 1.5rem;
+        }
+
+        .category.active .category-content {
+            max-height: 2000px; /* Altura máxima suficiente para el contenido */
+            transition: max-height 0.5s ease-in-out, padding 0.4s ease;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.4s ease 0.1s;
+        }
+
+        .category.active .programs-grid {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .program-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .program-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .program-card:hover::before {
+            left: 100%;
+        }
+
+        .program-card:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .program-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.4rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .program-version {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 400;
+        }
+
+        .program-tag {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        /* Special styling for different categories */
+        .category-seguridad .category-header { border-left: 4px solid #ef4444; }
+        .category-diseno .category-header { border-left: 4px solid #a855f7; }
+        .category-audio .category-header { border-left: 4px solid #ec4899; }
+        .category-descargas .category-header { border-left: 4px solid #f59e0b; }
+        .category-utilidades .category-header { border-left: 4px solid #10b981; }
+        .category-ofimatica .category-header { border-left: 4px solid #3b82f6; }
+        .category-ingenieria .category-header { border-left: 4px solid #f97316; }
+        .category-juegos .category-header { border-left: 4px solid #8b5cf6; }
+        .category-navegadores .category-header { border-left: 4px solid #06b6d4; }
+        .category-personalizacion .category-header { border-left: 4px solid #14b8a6; }
+
+        /* Active state colors */
+        .category-seguridad.active { border-color: rgba(239, 68, 68, 0.3); box-shadow: 0 0 30px -10px rgba(239, 68, 68, 0.2); }
+        .category-diseno.active { border-color: rgba(168, 85, 247, 0.3); box-shadow: 0 0 30px -10px rgba(168, 85, 247, 0.2); }
+        .category-audio.active { border-color: rgba(236, 72, 153, 0.3); box-shadow: 0 0 30px -10px rgba(236, 72, 153, 0.2); }
+        .category-descargas.active { border-color: rgba(245, 158, 11, 0.3); box-shadow: 0 0 30px -10px rgba(245, 158, 11, 0.2); }
+        .category-utilidades.active { border-color: rgba(16, 185, 129, 0.3); box-shadow: 0 0 30px -10px rgba(16, 185, 129, 0.2); }
+        .category-ofimatica.active { border-color: rgba(59, 130, 246, 0.3); box-shadow: 0 0 30px -10px rgba(59, 130, 246, 0.2); }
+        .category-ingenieria.active { border-color: rgba(249, 115, 22, 0.3); box-shadow: 0 0 30px -10px rgba(249, 115, 22, 0.2); }
+        .category-juegos.active { border-color: rgba(139, 92, 246, 0.3); box-shadow: 0 0 30px -10px rgba(139, 92, 246, 0.2); }
+        .category-navegadores.active { border-color: rgba(6, 182, 212, 0.3); box-shadow: 0 0 30px -10px rgba(6, 182, 212, 0.2); }
+        .category-personalizacion.active { border-color: rgba(20, 184, 166, 0.3); box-shadow: 0 0 30px -10px rgba(20, 184, 166, 0.2); }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 4rem;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .whatsapp-large {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white;
+            text-decoration: none;
+            padding: 1.25rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 35px -10px rgba(37, 211, 102, 0.4);
+            margin-bottom: 1rem;
+        }
+
+        .whatsapp-large:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 25px 50px -10px rgba(37, 211, 102, 0.5);
+        }
+
+        .footer-note {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .programs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .category-title {
+                font-size: 1.1rem;
+            }
+            
+            .category-count {
+                display: none;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+
+        /* No results message */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #64748b;
+            display: none;
+            font-size: 1.2rem;
+            background: var(--glass);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .highlight {
+            background: rgba(99, 102, 241, 0.4);
+            padding: 0 2px;
+            border-radius: 3px;
+            color: white;
+        }
+
+        /* Instructions */
+        .instructions {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        .instructions span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <header>
+        <div class="header-content">
+            <div class="badge">
+                <span>🫂</span>
+                <span>Servicio Profesional de Instalación</span>
+            </div>
+            <h1>Catálogo de Programas para Windows</h1>
+            <p class="subtitle">Arquitectura, Ingeniería, Diseño y más. Programas completos y actualizados.</p>
+            
+            <a href="https://wa.me/526563603966" class="contact-cta" target="_blank">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                WhatsApp: 656 360 3966
+            </a>
+            <div class="extra-service">⚡ Servicio a domicilio con costo extra</div>
+        </div>
+    </header>
+
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Buscar programa en todas las categorías...">
+        </div>
+    </div>
+
+    <div class="instructions">
+        👆 <span>Haz clic en cualquier categoría</span> para ver los programas disponibles
+    </div>
+
+    <main class="container" id="catalog">
+        
+        <!-- Seguridad -->
+        <section class="category category-seguridad" data-category="seguridad">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <span class="category-icon">🛡️</span>
+                <h2 class="category-title">Seguridad y Antivirus</h2>
+                <span class="category-count">10 programas</span>
+                <div class="toggle-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="category-content">
+                <div class="programs-grid">
+                    <div class="program-card"><div class="program-name">360 Total Security</div><span class="program-tag">Antivirus</span></div>
+                    <div class="program-card"><div class="program-name">Avast Free Antivirus</div><span class="program-tag">Antivirus</span></div>
+                    <div class="program-card"><div class="program-name">AVG Antivirus Free</div><span class="program-tag">Antivirus</span></div>
+                    <div class="program-card"><div class="program-name">Avira Antivirus Free Online</div><span class="program-tag">Antivirus</span></div>
+                    <div class="program-card"><div class="program-name">Eset Internet Security</div><span class="program-tag">Premium</span></div>
+                    <div class="program-card"><div class="program-name">Eset NOD32</div><span class="program-tag">Premium</span></div>
+                    <div class="program-card"><div class="program-name">Eset Security Ultimate</div><span class="program-tag">Premium</span></div>
+                    <div class="program-card"><div class="program-name">Eset Smart Security Premium</div><span class="program-tag">Premium</span></div>
+                    <div class="program-card"><div class="program-name">Defender Control</div><span class="program-tag">Utilidad</span></div>
+                    <div class="program-card"><div class="program-name">Iobit Malware Fighter</div><span class="program-tag">Antimalware</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diseño -->
+        <section class="category category-diseno" data-category="diseno">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <span class="category-icon">🎨</span>
+                <h2 class="category-title">Diseño, Creatividad y Multimedia</h2>
+                <span class="category-count">16 programas</span>
+                <div class="toggle-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="category-content">
+                <div class="programs-grid">
+                    <div class="program-card"><div class="program-name">Adobe After Effects</div><span class="program-tag">Video</span></div>
+                    <div class="program-card"><div class="program-name">Adobe Animate</div><span class="program-tag">Animación</span></div>
+                    <div class="program-card"><div class="program-name">Adobe Audition</div><span class="program-tag">Audio</span></div>
+                    <div class="program-card"><div class="program-name">Adobe Bridge</div><span class="program-tag">Gestor</span></div>
+                    <div class="program-card"><div class="program-name">Adobe Dreamweaver</div><span class="program-tag">Web</span></div>
+                    <div class="program-card"><div class="program-name">Adobe Encore</div><span class="program-tag">DVD</span></div>
+                    <div class="program-card"><div class="program-name">Adobe Illustrator <span class="program-version">+ Portable CS6</span></div><span class="program-tag">Vector</span></div>
+                    <div class="program-card"><div class="program-name">Adobe InDesign</div><span class="program-tag">Editorial</span></div>
+                    <div class="program-card"><div class="program-name">Adobe Lightroom</div><span class="program-tag">Fotografía</span></div>
+                    <div class="program-card"><div class="program-name">Adobe Photoshop <span class="program-version">+ Portable CC</span></div><span class="program-tag">Imagen</span></div>
+                    <div class="program-card"><div class="program-name">Adobe Premiere Pro</div><span class="program-tag">Video</span></div>
+                    <div class="program-card"><div class="program-name">Adobe Substance 3D</div><span class="program-tag">3D</span></div>
+                    <div class="program-card"><div class="program-name">CorelDRAW Graphics Suite</div><span class="program-tag">Vector</span></div>
+                    <div class="program-card"><div class="program-name">Filmora / Wondershare Filmora</div><span class="program-tag">Video</span></div>
+                    <div class="program-card"><div class="program-name">Magix Vegas Pro</div><span class="program-tag">Video</span></div>
+                    <div class="program-card"><div class="program-name">SketchUp Pro</div><span class="program-tag">3D</span></div>
+                    <div class="program-card"><div class="program-name">SOLIDWORKS <span class="program-version">2018, 2024, 2025</span></div><span class="program-tag">CAD 3D</span></div>
+                    <div class="program-card"><div class="program-name">Techsmith Camtasia</div><span class="program-tag">Grabación</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Audio -->
+        <section class="category category-audio" data-category="audio">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <span class="category-icon">🎧</span>
+                <h2 class="category-title">Audio y Reproductores</h2>
+                <span class="category-count">7 programas</span>
+                <div class="toggle-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="category-content">
+                <div class="programs-grid">
+                    <div class="program-card"><div class="program-name">AIMP</div><span class="program-tag">Reproductor</span></div>
+                    <div class="program-card"><div class="program-name">Audacity</div><span class="program-tag">Edición</span></div>
+                    <div class="program-card"><div class="program-name">FL Studio</div><span class="program-tag">Producción</span></div>
+                    <div class="program-card"><div class="program-name">Gom Player Plus</div><span class="program-tag">Reproductor</span></div>
+                    <div class="program-card"><div class="program-name">iTunes</div><span class="program-tag">Apple</span></div>
+                    <div class="program-card"><div class="program-name">Virtual DJ Pro</div><span class="program-tag">DJ</span></div>
+                    <div class="program-card"><div class="program-name">Winamp</div><span class="program-tag">Clásico</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Descargas -->
+        <section class="category category-descargas" data-category="descargas">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <span class="category-icon">📥</span>
+                <h2 class="category-title">Descargas y Conversión</h2>
+                <span class="category-count">11 programas</span>
+                <div class="toggle-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="category-content">
+                <div class="programs-grid">
+                    <div class="program-card"><div class="program-name">4K Downloader</div><span class="program-tag">Video</span></div>
+                    <div class="program-card"><div class="program-name">4K Stogram</div><span class="program-tag">Instagram</span></div>
+                    <div class="program-card"><div class="program-name">4K Video Downloader Plus</div><span class="program-tag">Video</span></div>
+                    <div class="program-card"><div class="program-name">4K YouTube to MP3</div><span class="program-tag">Audio</span></div>
+                    <div class="program-card"><div class="program-name">Any Video Downloader</div><span class="program-tag">Video</span></div>
+                    <div class="program-card"><div class="program-name">Atube Catcher</div><span class="program-tag">Video</span></div>
+                    <div class="program-card"><div class="program-name">Freemake Video Converter</div><span class="program-tag">Conversor</span></div>
+                    <div class="program-card"><div class="program-name">Internet Download Manager</div><span class="program-tag">Gestor</span></div>
+                    <div class="program-card"><div class="program-name">iTubeGo</div><span class="program-tag">Video</span></div>
+                    <div class="program-card"><div class="program-name">YT YouTube Downloader</div><span class="program-tag">YouTube</span></div>
+                    <div class="program-card"><div class="program-name">qBittorrent</div><span class="program-tag">Torrent</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Utilidades -->
+        <section class="category category-utilidades" data-category="utilidades">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <span class="category-icon">🛠️</span>
+                <h2 class="category-title">Utilidades del Sistema</h2>
+                <span class="category-count">32 programas</span>
+                <div class="toggle-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="category-content">
+                <div class="programs-grid">
+                    <div class="program-card"><div class="program-name">7zip</div><span class="program-tag">Compresión</span></div>
+                    <div class="program-card"><div class="program-name">Advance System Care Pro</div><span class="program-tag">Optimización</span></div>
+                    <div class="program-card"><div class="program-name">AIDA64 Extreme Edition</div><span class="program-tag">Diagnóstico</span></div>
+                    <div class="program-card"><div class="program-name">Anydesk</div><span class="program-tag">Remoto</span></div>
+                    <div class="program-card"><div class="program-name">Aomei Partition Unlimited</div><span class="program-tag">Particiones</span></div>
+                    <div class="program-card"><div class="program-name">CCleaner Technician</div><span class="program-tag">Limpieza</span></div>
+                    <div class="program-card"><div class="program-name">Deep Freeze Enterprise</div><span class="program-tag">Protección</span></div>
+                    <div class="program-card"><div class="program-name">Disk Drill Enterprise</div><span class="program-tag">Recuperación</span></div>
+                    <div class="program-card"><div class="program-name">Driver Easy</div><span class="program-tag">Drivers</span></div>
+                    <div class="program-card"><div class="program-name">Driver Pack Online</div><span class="program-tag">Drivers</span></div>
+                    <div class="program-card"><div class="program-name">Drivermax</div><span class="program-tag">Drivers</span></div>
+                    <div class="program-card"><div class="program-name">EaseUS Data Recovery</div><span class="program-tag">Recuperación</span></div>
+                    <div class="program-card"><div class="program-name">Glary Utilities Pro</div><span class="program-tag">Optimización</span></div>
+                    <div class="program-card"><div class="program-name">Iobit Driver Booster</div><span class="program-tag">Drivers</span></div>
+                    <div class="program-card"><div class="program-name">Iobit Smart Defrag</div><span class="program-tag">Disco</span></div>
+                    <div class="program-card"><div class="program-name">Iobit Uninstaller Pro</div><span class="program-tag">Desinstalador</span></div>
+                    <div class="program-card"><div class="program-name">Java Development Kit</div><span class="program-tag">Desarrollo</span></div>
+                    <div class="program-card"><div class="program-name">K-Lite Codec Pack</div><span class="program-tag">Códecs</span></div>
+                    <div class="program-card"><div class="program-name">Libre Office</div><span class="program-tag">Ofimática</span></div>
+                    <div class="program-card"><div class="program-name">Media Creation Tool</div><span class="program-tag">Windows</span></div>
+                    <div class="program-card"><div class="program-name">Minitool Power Data Recovery</div><span class="program-tag">Recuperación</span></div>
+                    <div class="program-card"><div class="program-name">Mirilis Action</div><span class="program-tag">Grabación</span></div>
+                    <div class="program-card"><div class="program-name">Net Limiter</div><span class="program-tag">Red</span></div>
+                    <div class="program-card"><div class="program-name">Net Framework</div><span class="program-tag">Sistema</span></div>
+                    <div class="program-card"><div class="program-name">Notepad++</div><span class="program-tag">Editor</span></div>
+                    <div class="program-card"><div class="program-name">OBS Studio</div><span class="program-tag">Streaming</span></div>
+                    <div class="program-card"><div class="program-name">OEM Info Editor</div><span class="program-tag">Personalización</span></div>
+                    <div class="program-card"><div class="program-name">Open Shell</div><span class="program-tag">Menú Inicio</span></div>
+                    <div class="program-card"><div class="program-name">Partition Wizard Technician</div><span class="program-tag">Particiones</span></div>
+                    <div class="program-card"><div class="program-name">PDF Creator</div><span class="program-tag">PDF</span></div>
+                    <div class="program-card"><div class="program-name">PowerDVD Ultra</div><span class="program-tag">Reproductor</span></div>
+                    <div class="program-card"><div class="program-name">Rainmeter</div><span class="program-tag">Personalización</span></div>
+                    <div class="program-card"><div class="program-name">Recuva Professional</div><span class="program-tag">Recuperación</span></div>
+                    <div class="program-card"><div class="program-name">Rocketdock</div><span class="program-tag">Lanzador</span></div>
+                    <div class="program-card"><div class="program-name">Smart Driver Manager</div><span class="program-tag">Drivers</span></div>
+                    <div class="program-card"><div class="program-name">Sumatra PDF</div><span class="program-tag">Lector PDF</span></div>
+                    <div class="program-card"><div class="program-name">Victoria SSD/HDD</div><span class="program-tag">Diagnóstico</span></div>
+                    <div class="program-card"><div class="program-name">Virtual Clone</div><span class="program-tag">ISO</span></div>
+                    <div class="program-card"><div class="program-name">VMware Workstation Pro</div><span class="program-tag">Virtualización</span></div>
+                    <div class="program-card"><div class="program-name">Winrar</div><span class="program-tag">Compresión</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ofimática -->
+        <section class="category category-ofimatica" data-category="ofimatica">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <span class="category-icon">📑</span>
+                <h2 class="category-title">Documentos y Ofimática</h2>
+                <span class="category-count">7 programas</span>
+                <div class="toggle-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="category-content">
+                <div class="programs-grid">
+                    <div class="program-card"><div class="program-name">Adobe Acrobat DC / PRO</div><span class="program-tag">PDF</span></div>
+                    <div class="program-card"><div class="program-name">Foxit PDF Pro</div><span class="program-tag">PDF</span></div>
+                    <div class="program-card"><div class="program-name">Nitro Pro PDF</div><span class="program-tag">PDF</span></div>
+                    <div class="program-card"><div class="program-name">Office 2010 Professional</div><span class="program-tag">Microsoft</span></div>
+                    <div class="program-card"><div class="program-name">Office 2013 Professional</div><span class="program-tag">Microsoft</span></div>
+                    <div class="program-card"><div class="program-name">Office 2019 Professional</div><span class="program-tag">Microsoft</span></div>
+                    <div class="program-card"><div class="program-name">Office 2021 Professional</div><span class="program-tag">Microsoft</span></div>
+                    <div class="program-card"><div class="program-name">Office 2024 Professional</div><span class="program-tag">Microsoft</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ingeniería -->
+        <section class="category category-ingenieria" data-category="ingenieria">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <span class="category-icon">🏗️</span>
+                <h2 class="category-title">Ingeniería y CAD</h2>
+                <span class="category-count">7 programas</span>
+                <div class="toggle-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="category-content">
+                <div class="programs-grid">
+                    <div class="program-card"><div class="program-name">Autocad</div><span class="program-tag">CAD</span></div>
+                    <div class="program-card"><div class="program-name">Autodesk Civil 3D</div><span class="program-tag">Civil</span></div>
+                    <div class="program-card"><div class="program-name">Autodesk Inventor</div><span class="program-tag">Mecánico</span></div>
+                    <div class="program-card"><div class="program-name">Autodesk Maya</div><span class="program-tag">3D/Animación</span></div>
+                    <div class="program-card"><div class="program-name">Autodesk 3DS MAX</div><span class="program-tag">3D</span></div>
+                    <div class="program-card"><div class="program-name">SAP 2000</div><span class="program-tag">Estructural</span></div>
+                    <div class="program-card"><div class="program-name">SAP Business One</div><span class="program-tag">ERP</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Juegos -->
+        <section class="category category-juegos" data-category="juegos">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <span class="category-icon">🎮</span>
+                <h2 class="category-title">Juegos y Gráficos</h2>
+                <span class="category-count">2 programas</span>
+                <div class="toggle-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="category-content">
+                <div class="programs-grid">
+                    <div class="program-card"><div class="program-name">DirectX 09</div><span class="program-tag">API Gráfica</span></div>
+                    <div class="program-card"><div class="program-name">DirectX 12</div><span class="program-tag">API Gráfica</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navegadores -->
+        <section class="category category-navegadores" data-category="navegadores">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <span class="category-icon">🌐</span>
+                <h2 class="category-title">Navegadores y Comunicación</h2>
+                <span class="category-count">2 programas</span>
+                <div class="toggle-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="category-content">
+                <div class="programs-grid">
+                    <div class="program-card"><div class="program-name">Mozilla Firefox</div><span class="program-tag">Navegador</span></div>
+                    <div class="program-card"><div class="program-name">Telegram Desktop</div><span class="program-tag">Mensajería</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personalización -->
+        <section class="category category-personalizacion" data-category="personalizacion">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <span class="category-icon">🎛️</span>
+                <h2 class="category-title">Personalización y Extras</h2>
+                <span class="category-count">6 programas</span>
+                <div class="toggle-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="category-content">
+                <div class="programs-grid">
+                    <div class="program-card"><div class="program-name">Stardock CursorFX</div><span class="program-tag">Cursores</span></div>
+                    <div class="program-card"><div class="program-name">Stardock Start10</div><span class="program-tag">Windows 10</span></div>
+                    <div class="program-card"><div class="program-name">Stardock Start11</div><span class="program-tag">Windows 11</span></div>
+                    <div class="program-card"><div class="program-name">Stardock Start8</div><span class="program-tag">Windows 8</span></div>
+                    <div class="program-card"><div class="program-name">Starallback</div><span class="program-tag">Barra tareas</span></div>
+                    <div class="program-card"><div class="program-name">StartIsBack AIO</div><span class="program-tag">Menú Inicio</span></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="no-results" id="noResults">
+            🔍 No se encontraron programas que coincidan con tu búsqueda.
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <a href="https://wa.me/526563603966" class="whatsapp-large" target="_blank">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                Contactar por WhatsApp
+            </a>
+            <div style="font-size: 1.5rem; font-weight: 700; color: #25d366; margin: 1rem 0;">656 360 3966</div>
+            <p class="footer-note">Servicio profesional de instalación de software en Windows.<br>⚡ Servicio a domicilio disponible con costo extra.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle category function
+        function toggleCategory(header) {
+            const category = header.parentElement;
+            const wasActive = category.classList.contains('active');
+            
+            // Close all other categories (optional - remove this block if you want multiple open)
+            document.querySelectorAll('.category.active').forEach(cat => {
+                if (cat !== category) {
+                    cat.classList.remove('active');
+                }
+            });
+            
+            // Toggle current category
+            category.classList.toggle('active');
+            
+            // Smooth scroll to category if opening
+            if (!wasActive) {
+                setTimeout(() => {
+                    category.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            }
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const categories = document.querySelectorAll('.category');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            let hasResults = false;
+
+            if (searchTerm.length === 0) {
+                // If search is empty, close all categories
+                categories.forEach(category => {
+                    category.classList.remove('active');
+                    category.style.display = 'block';
+                    const cards = category.querySelectorAll('.program-card');
+                    cards.forEach(card => {
+                        card.style.display = 'block';
+                        const nameElement = card.querySelector('.program-name');
+                        nameElement.innerHTML = nameElement.textContent;
+                    });
+                });
+                noResults.style.display = 'none';
+                return;
+            }
+
+            categories.forEach(category => {
+                const cards = category.querySelectorAll('.program-card');
+                let categoryHasMatch = false;
+
+                cards.forEach(card => {
+                    const text = card.textContent.toLowerCase();
+                    const isMatch = text.includes(searchTerm);
+                    
+                    if (isMatch) {
+                        card.style.display = 'block';
+                        categoryHasMatch = true;
+                        hasResults = true;
+                        
+                        // Highlight matching text
+                        const nameElement = card.querySelector('.program-name');
+                        const originalText = nameElement.textContent;
+                        const regex = new RegExp(`(${searchTerm})`, 'gi');
+                        nameElement.innerHTML = originalText.replace(regex, '<span class="highlight">$1</span>');
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (categoryHasMatch) {
+                    category.style.display = 'block';
+                    category.classList.add('active'); // Auto-open if matches found
+                } else {
+                    category.style.display = 'none';
+                }
+            });
+
+            noResults.style.display = hasResults ? 'none' : 'block';
+        });
+
+        // Add click animation to cards
+        document.querySelectorAll('.program-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    card.style.transform = '';
+                }, 150);
+            });
+        });
+    </script>
+</body>
+</html>
